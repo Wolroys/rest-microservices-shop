@@ -10,3 +10,10 @@ server:
 spring:
   application:
     name: shop-service
+
+logging:
+  level:
+    com:
+      netflix:
+        eureka: OFF
+        discovery: OFF

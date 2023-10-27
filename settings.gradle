@@ -1,4 +1,6 @@
 rootProject.name = 'spring-shop-application'
 
 includeBuild 'shop-server'
+includeBuild 'shop-gateway'
+includeBuild 'item-service'
 
