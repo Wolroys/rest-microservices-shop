@@ -1,16 +1,16 @@
 package com.wolroys.shopentity.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "product")
-public class Product {
+@EqualsAndHashCode(callSuper = false)
+public class Product extends AuditingEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

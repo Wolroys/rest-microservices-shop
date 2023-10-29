@@ -1,5 +1,6 @@
 package com.wolroys.shopentity.dto;
 
+import com.wolroys.shopentity.entity.AuditingEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+public class ProductDto  {
 
     private Long id;
 
