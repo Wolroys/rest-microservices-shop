@@ -1,6 +1,8 @@
 package com.wolroys.itemservice.controller;
 
 import com.wolroys.itemservice.service.ProductService;
+import com.wolroys.shopentity.dto.ProductCreateEditDto;
+import com.wolroys.shopentity.dto.ProductDto;
 import com.wolroys.shopentity.entity.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,24 +19,24 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> findAll(){
+    public List<ProductDto> findAll(){
         return productService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Product findProduct(@PathVariable Long id){
+    public ProductDto findProduct(@PathVariable Long id){
         return productService.findProduct(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/category")
-    public List<Product> findProductByCategory(@RequestBody String category){
+    public List<ProductDto> findProductByCategory(@RequestBody String category){
         return productService.findByCategory(category);
     }
 
     @PostMapping("/add")
-    public Product addProduct(@RequestBody Product product){
-        return productService.addProduct(product);
+    public ProductDto addProduct(@RequestBody ProductCreateEditDto productDto){
+        return productService.addProduct(productDto);
     }
 
     @PatchMapping("/update/{id}")

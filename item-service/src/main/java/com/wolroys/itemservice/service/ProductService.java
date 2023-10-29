@@ -1,7 +1,12 @@
 package com.wolroys.itemservice.service;
 
+import com.wolroys.itemservice.repository.CategoryRepository;
 import com.wolroys.itemservice.repository.ProductRepository;
+import com.wolroys.shopentity.dto.ProductCreateEditDto;
+import com.wolroys.shopentity.dto.ProductDto;
+import com.wolroys.shopentity.entity.Category;
 import com.wolroys.shopentity.entity.Product;
+import com.wolroys.shopentity.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,24 +20,42 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+    private final CategoryRepository categoryRepository;
 
-    public List<Product> findAll(){
-        return productRepository.findAll();
+    public List<ProductDto> findAll(){
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::mapToDto)
+                .toList();
     }
 
-    public Optional<Product> findProduct(Long id){
-        return productRepository.findById(id);
+    public Optional<ProductDto> findProduct(Long id){
+        return productRepository.findById(id)
+                .map(productMapper::mapToDto);
     }
 
-    public List<Product> findByCategory(String name){
-        return productRepository.findByCategoryName(name);
+    public List<ProductDto> findByCategory(String name){
+        return productRepository.findByCategoryName(name)
+                .stream()
+                .map(productMapper::mapToDto)
+                .toList();
     }
 
 
     @Transactional
-    public Product addProduct(Product product){
-        return Optional.of(product)
+    public ProductDto addProduct(ProductCreateEditDto productDto){
+        Category category = categoryRepository.findByName(productDto.getCategoryTitle())
+                .orElseThrow();
+
+        return Optional.of(productDto)
+                .map(productMapper::mapToEntity)
+                .map(entity -> {
+                    entity.setCategory(category);
+                    return entity;
+                })
                 .map(productRepository::saveAndFlush)
+                .map(productMapper::mapToDto)
                 .orElseThrow();
 
     }

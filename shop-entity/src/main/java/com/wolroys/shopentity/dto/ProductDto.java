@@ -1,4 +1,4 @@
-package com.wolroys.itemservice.dto;
+package com.wolroys.shopentity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductDto {
 
-    public String name;
+    private Long id;
 
-    public String description;
+    private String name;
 
-    public double price;
+    private String description;
 
-    public int quantity;
+    private Double price;
 
+    private Integer quantity;
 }
