@@ -1,7 +1,7 @@
 package com.wolroys.itemservice.controller;
 
-import com.wolroys.itemservice.entity.Category;
 import com.wolroys.itemservice.service.CategoryService;
+import com.wolroys.shopentity.entity.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

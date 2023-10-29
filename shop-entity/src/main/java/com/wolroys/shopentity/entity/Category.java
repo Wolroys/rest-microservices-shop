@@ -1,4 +1,4 @@
-package com.wolroys.itemservice.entity;
+package com.wolroys.shopentity.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

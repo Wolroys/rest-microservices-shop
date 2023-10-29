@@ -1,4 +1,4 @@
-package com.wolroys.itemservice.entity;
+package com.wolroys.shopentity.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,6 +21,8 @@ public class Product {
     private String description;
 
     private Double price;
+
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

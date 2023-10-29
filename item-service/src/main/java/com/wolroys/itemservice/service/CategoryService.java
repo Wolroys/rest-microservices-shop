@@ -1,8 +1,7 @@
 package com.wolroys.itemservice.service;
 
-import com.wolroys.itemservice.entity.Category;
-import com.wolroys.itemservice.entity.Product;
 import com.wolroys.itemservice.repository.CategoryRepository;
+import com.wolroys.shopentity.entity.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +16,6 @@ public class CategoryService {
     public List<Category> findAll(){
         return categoryRepository.findAll();
     }
+
+
 }

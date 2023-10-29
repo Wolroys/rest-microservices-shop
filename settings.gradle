@@ -3,4 +3,6 @@ rootProject.name = 'spring-shop-application'
 includeBuild 'shop-server'
 includeBuild 'shop-gateway'
 includeBuild 'item-service'
+includeBuild 'shop-config'
+includeBuild 'shop-entity'
 

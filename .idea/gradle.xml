@@ -12,6 +12,16 @@
                   <project path="$PROJECT_DIR$/item-service" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/shop-config" name="shop-config">
+                <projects>
+                  <project path="$PROJECT_DIR$/shop-config" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/shop-entity" name="shop-entity">
+                <projects>
+                  <project path="$PROJECT_DIR$/shop-entity" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/shop-gateway" name="shop-gateway">
                 <projects>
                   <project path="$PROJECT_DIR$/shop-gateway" />
@@ -31,6 +41,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/item-service" />
+            <option value="$PROJECT_DIR$/shop-config" />
+            <option value="$PROJECT_DIR$/shop-entity" />
             <option value="$PROJECT_DIR$/shop-gateway" />
             <option value="$PROJECT_DIR$/shop-server" />
           </set>
@@ -49,6 +61,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/shop-config" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/shop-entity" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/shop-entity" />
           </set>
         </option>
       </GradleProjectSettings>
