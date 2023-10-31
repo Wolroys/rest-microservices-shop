@@ -8,6 +8,7 @@ import com.wolroys.shopentity.entity.Category;
 import com.wolroys.shopentity.entity.Product;
 import com.wolroys.shopentity.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProductService {
 
@@ -61,14 +62,16 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<Product> updateProduct(Long id, Product productDto){
+    public Optional<ProductDto> updateProduct(Long id, ProductCreateEditDto productDto){
+        Optional<Product> product = productRepository.findById(id);
 
-        if (productRepository.findById(id).isPresent()){
-            productRepository.saveAndFlush(productDto);
+        if (product.isPresent()) {
+            productMapper.map(productDto, product);
 
-            return productRepository.findById(id);
+            return product
+                    .map(productRepository::saveAndFlush)
+                    .map(productMapper::mapToDto);
         }
-
         return Optional.empty();
     }
 

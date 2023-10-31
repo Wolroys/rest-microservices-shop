@@ -32,6 +32,11 @@
                   <project path="$PROJECT_DIR$/shop-server" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/user-service" name="user-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/user-service" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -45,6 +50,7 @@
             <option value="$PROJECT_DIR$/shop-entity" />
             <option value="$PROJECT_DIR$/shop-gateway" />
             <option value="$PROJECT_DIR$/shop-server" />
+            <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -85,6 +91,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/shop-server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>
       </GradleProjectSettings>

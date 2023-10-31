@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: user-service
+  profiles:
+    active: users, micro
+  config:
+    import: configserver:http://localhost:8888
+server:
+  port: 0

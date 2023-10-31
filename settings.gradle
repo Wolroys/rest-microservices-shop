@@ -5,4 +5,5 @@ includeBuild 'shop-gateway'
 includeBuild 'item-service'
 includeBuild 'shop-config'
 includeBuild 'shop-entity'
+includeBuild 'user-service'
 

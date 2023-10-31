@@ -5,3 +5,10 @@ spring:
     import: configserver:http://localhost:8888
   application:
     name: shop-gateway
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: info
