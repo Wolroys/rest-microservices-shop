@@ -45,6 +45,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/cart-service" />
             <option value="$PROJECT_DIR$/item-service" />
             <option value="$PROJECT_DIR$/shop-config" />
             <option value="$PROJECT_DIR$/shop-entity" />

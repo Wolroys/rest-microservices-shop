@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: item-service
+  profiles:
+    active: cart, micro
+  config:
+    import: configserver:http://localhost:8888
+server:
+  port: 0
+
