@@ -7,6 +7,11 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
+              <build path="$PROJECT_DIR$/cart-service" name="cart-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/cart-service" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/item-service" name="item-service">
                 <projects>
                   <project path="$PROJECT_DIR$/item-service" />
@@ -32,6 +37,11 @@
                   <project path="$PROJECT_DIR$/shop-server" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/shop-utils" name="shop-utils">
+                <projects>
+                  <project path="$PROJECT_DIR$/shop-utils" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/user-service" name="user-service">
                 <projects>
                   <project path="$PROJECT_DIR$/user-service" />
@@ -51,6 +61,7 @@
             <option value="$PROJECT_DIR$/shop-entity" />
             <option value="$PROJECT_DIR$/shop-gateway" />
             <option value="$PROJECT_DIR$/shop-server" />
+            <option value="$PROJECT_DIR$/shop-utils" />
             <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>
@@ -92,6 +103,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/shop-server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/shop-utils" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/shop-utils" />
           </set>
         </option>
       </GradleProjectSettings>

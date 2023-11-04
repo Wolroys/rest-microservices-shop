@@ -1,5 +1,6 @@
 package com.wolroys.shopentity.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +21,12 @@ public class CartProduct extends AuditingEntity<Long>{
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonIgnore
     private Cart cart;
 
     private Long productId;
 
     private int quantity;
 
-    private double price;
+    private Double price;
 }
