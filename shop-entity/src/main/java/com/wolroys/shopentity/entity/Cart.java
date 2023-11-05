@@ -1,9 +1,11 @@
 package com.wolroys.shopentity.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
