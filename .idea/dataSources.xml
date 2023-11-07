@@ -22,5 +22,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/shop-cart</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="shop-order@localhost" uuid="4bc1ab7b-ee65-488f-a3ff-67923604e198">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/shop-order</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

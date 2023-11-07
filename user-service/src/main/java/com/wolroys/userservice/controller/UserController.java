@@ -2,7 +2,6 @@ package com.wolroys.userservice.controller;
 
 import com.wolroys.shopentity.dto.UserCreateEditDto;
 import com.wolroys.shopentity.dto.UserDto;
-import com.wolroys.shopentity.entity.User;
 import com.wolroys.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
