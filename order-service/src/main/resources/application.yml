@@ -1,0 +1,9 @@
+spring:
+    application:
+        name: order-service
+    profiles:
+        active: order, micro
+    config:
+        import: configserver:http://localhost:8888
+server:
+    port: 0

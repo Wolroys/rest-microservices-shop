@@ -7,5 +7,6 @@ includeBuild 'shop-config'
 includeBuild 'shop-entity'
 includeBuild 'user-service'
 includeBuild 'cart-service'
+includeBuild 'order-service'
 includeBuild 'shop-utils'
 
