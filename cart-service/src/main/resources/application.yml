@@ -2,9 +2,12 @@ spring:
   application:
     name: cart-service
   profiles:
-    active: cart, micro
+    active: cart, micro, rabbit
   config:
     import: configserver:http://localhost:8888
+
+
 server:
   port: 0
+
 

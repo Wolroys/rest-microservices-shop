@@ -2,7 +2,7 @@ spring:
     application:
         name: order-service
     profiles:
-        active: order, micro
+        active: order, micro, rabbit
     config:
         import: configserver:http://localhost:8888
 server:

@@ -1,5 +1,6 @@
 package com.wolroys.shopentity.mapper;
 
+import com.wolroys.shopentity.dto.OrderProductDto;
 import com.wolroys.shopentity.dto.cart.CartDto;
 import com.wolroys.shopentity.dto.cart.CartProductDto;
 import com.wolroys.shopentity.entity.Cart;
@@ -28,5 +29,9 @@ public class CartMapper {
 
     public CartProduct toCartProduct(CartProductDto cartProductDto){
         return cartProductDto == null ? null : modelMapper.map(cartProductDto, CartProduct.class);
+    }
+
+    public OrderProductDto toOrderProductDto(CartProductDto cartProductDto){
+        return cartProductDto == null ? null : modelMapper.map(cartProductDto, OrderProductDto.class);
     }
 }

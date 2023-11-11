@@ -1,12 +1,16 @@
 package com.wolroys.cartservice.service;
 
+import com.wolroys.cartservice.mq.CartProducerManager;
 import com.wolroys.cartservice.repository.CartProductRepository;
 import com.wolroys.cartservice.repository.CartRepository;
+import com.wolroys.shopentity.dto.OrderDto;
+import com.wolroys.shopentity.dto.OrderProductDto;
 import com.wolroys.shopentity.dto.ProductDto;
 import com.wolroys.shopentity.dto.cart.CartDto;
 import com.wolroys.shopentity.dto.cart.CartProductDto;
 import com.wolroys.shopentity.entity.Cart;
 import com.wolroys.shopentity.entity.CartProduct;
+import com.wolroys.shopentity.entity.Status;
 import com.wolroys.shopentity.mapper.CartMapper;
 import com.wolroys.shoputils.webClient.ProductWebClientBuilder;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 
 
 @Service
@@ -26,10 +32,12 @@ public class CartService {
     private final CartProductService cartProductService;
     private final CartProductRepository cartProductRepository;
     private final CartMapper cartMapper;
+    private final CartProducerManager cartProducerManager;
 
     public Cart createCart(Long userId){
         Cart cart = new Cart();
         cart.setUserId(userId);
+        cart.setTotalPrice(0.0);
         return cartRepository.save(cart);
     }
 
@@ -111,8 +119,33 @@ public class CartService {
     public void clear(Long userId){
         Cart cart = cartRepository.findByUserId(userId);
         cartProductRepository.removeAllByCartId(cart.getId());
-        cart.setTotalPrice(0.0);
-        cartRepository.save(cart);
+        cartRepository.delete(cart);
+        createCart(userId);
+    }
+
+    @Transactional
+    public OrderDto createOrder(Long userId){
+        CartDto cart = getCartByUserId(userId);
+
+        if (cart != null && !cart.getProducts().isEmpty()){
+            OrderDto orderDto = new OrderDto();
+
+            orderDto.setUserId(userId);
+            orderDto.setOrderDate(LocalDate.now());
+            orderDto.setStatus(Status.PAID);
+            orderDto.setProducts(cart.getProducts()
+                    .stream()
+                    .map(cartMapper::toOrderProductDto)
+                    .toList());
+            orderDto.setTotalAmount(cart.getTotalPrice());
+
+            clear(userId);
+
+            cartProducerManager.sendNewCartMessage(orderDto);
+
+            return orderDto;
+        }
+        return null;
     }
 }
 

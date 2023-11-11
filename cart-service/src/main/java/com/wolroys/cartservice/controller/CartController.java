@@ -2,6 +2,7 @@ package com.wolroys.cartservice.controller;
 
 import com.wolroys.cartservice.service.CartProductService;
 import com.wolroys.cartservice.service.CartService;
+import com.wolroys.shopentity.dto.OrderDto;
 import com.wolroys.shopentity.dto.cart.CartDto;
 import com.wolroys.shopentity.dto.cart.CartProductDto;
 import com.wolroys.shopentity.entity.Cart;
@@ -55,5 +56,11 @@ public class CartController {
     @DeleteMapping("/clear/{userId}")
     public void clear(@PathVariable Long userId){
         cartService.clear(userId);
+    }
+
+    @GetMapping("/buy/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public OrderDto buy(@PathVariable Long id){
+        return cartService.createOrder(id);
     }
 }
