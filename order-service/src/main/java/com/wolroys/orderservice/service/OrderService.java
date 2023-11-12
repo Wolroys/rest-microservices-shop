@@ -58,6 +58,17 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    @Transactional
+    public boolean cancelOrder(Long id){
+        return orderRepository.findById(id)
+                .map(entity -> {
+                    entity.setStatus(Status.CANCELLED);
+                    orderRepository.saveAndFlush(entity);
+                    return true;
+                }).orElse(false);
+        //TODO
+    }
+
 
     //TODO create notification method about creating order
 

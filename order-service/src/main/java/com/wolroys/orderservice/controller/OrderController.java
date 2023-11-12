@@ -2,7 +2,6 @@ package com.wolroys.orderservice.controller;
 
 import com.wolroys.orderservice.service.OrderService;
 import com.wolroys.shopentity.dto.OrderDto;
-import com.wolroys.shopentity.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +39,13 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public void completeOrder(@PathVariable Long id){
         orderService.completeOrder(id);
+    }
+
+    @GetMapping("/cancel/{id}")
+    public void cancelOrder(@PathVariable Long id){
+        if (!orderService.cancelOrder(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
