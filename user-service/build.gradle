@@ -28,6 +28,8 @@ dependencies {
     implementation 'com.wolroys:shop-entity'
     implementation 'com.wolroys:shop-utils'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 
     runtimeOnly 'org.postgresql:postgresql'
 

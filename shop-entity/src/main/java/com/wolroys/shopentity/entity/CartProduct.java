@@ -1,7 +1,8 @@
 package com.wolroys.shopentity.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wolroys.shopentity.entity.Cart;
+import com.wolroys.shopentity.entity.AuditingEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "cart_product")
-public class CartProduct extends AuditingEntity<Long>{
+public class CartProduct extends AuditingEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.wolroys.shopentity.dto.cart;
+package com.wolroys.shopentity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

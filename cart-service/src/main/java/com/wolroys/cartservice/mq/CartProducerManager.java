@@ -1,7 +1,6 @@
 package com.wolroys.cartservice.mq;
 
 import com.wolroys.shopentity.dto.OrderDto;
-import com.wolroys.shopentity.dto.cart.CartDto;
 import lombok.Getter;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package com.wolroys.shopentity.mapper;
 
 import com.wolroys.shopentity.dto.OrderProductDto;
-import com.wolroys.shopentity.dto.cart.CartDto;
-import com.wolroys.shopentity.dto.cart.CartProductDto;
+import com.wolroys.shopentity.dto.CartDto;
+import com.wolroys.shopentity.dto.CartProductDto;
 import com.wolroys.shopentity.entity.Cart;
 import com.wolroys.shopentity.entity.CartProduct;
 import lombok.RequiredArgsConstructor;

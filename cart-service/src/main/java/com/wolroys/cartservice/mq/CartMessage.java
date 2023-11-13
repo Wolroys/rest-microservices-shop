@@ -1,7 +1,6 @@
 package com.wolroys.cartservice.mq;
 
 import com.wolroys.shopentity.dto.OrderDto;
-import com.wolroys.shopentity.dto.cart.CartDto;
 import lombok.Getter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

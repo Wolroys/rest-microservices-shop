@@ -1,5 +1,6 @@
 package com.wolroys.shopentity.dto;
 
+import com.wolroys.shopentity.dto.OrderProductDto;
 import com.wolroys.shopentity.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

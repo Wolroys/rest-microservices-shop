@@ -1,11 +1,9 @@
 package com.wolroys.shopentity.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -14,7 +12,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "cart")
-public class Cart extends AuditingEntity<Long>{
+public class Cart extends AuditingEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
