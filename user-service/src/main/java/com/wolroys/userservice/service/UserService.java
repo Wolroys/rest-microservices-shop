@@ -74,12 +74,11 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username).orElseThrow(() ->
-                new UsernameNotFoundException(String.format("User '%s' not found", username)));
+                new UsernameNotFoundException(String.format("User '%s' wasn't found", username)));
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 Collections.singleton(user.getRole()));
     }
-
 }
 
 

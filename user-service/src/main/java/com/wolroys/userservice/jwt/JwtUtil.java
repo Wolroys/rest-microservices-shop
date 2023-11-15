@@ -1,9 +1,7 @@
 package com.wolroys.userservice.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -29,9 +27,15 @@ public class JwtUtil {
     @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
 
-    public void validateToken(String token){
-        Jwts.parser().verifyWith(getSignKey())
+    public boolean validateToken(String token){
+        try{
+            Jwts.parser().verifyWith(getSignKey())
                 .build().parseSignedClaims(token);
+            return true;
+        } catch (JwtException e){
+            System.out.println("Invalid JWT token: " +  e.getMessage());
+            return false;
+        }
     }
 
     public String generateToken(UserDetails userDetails){
@@ -54,5 +58,13 @@ public class JwtUtil {
     private SecretKey getSignKey(){
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String getUsernameFromToken(String token){
+        Claims claims = Jwts.parser().verifyWith(getSignKey())
+                .build().parseSignedClaims(token)
+                .getPayload();
+
+        return claims.getSubject();
     }
 }
