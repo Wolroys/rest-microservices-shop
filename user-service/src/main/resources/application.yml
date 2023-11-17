@@ -9,5 +9,5 @@ server:
   port: 0
 
 jwt:
-  secret: secret
+  secret: secretdsadsadsadsadsadsadsadsadasdsadasdsadasdsadddddddddddddddddddddd
   lifetime: 360000000

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +47,7 @@ public class JwtUtil {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
         claims.put("roles", roles);
-        Date expiration = new Date(jwtLifetime);
+        Date expiration = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
 
         return Jwts.builder()
                 .claims(claims)

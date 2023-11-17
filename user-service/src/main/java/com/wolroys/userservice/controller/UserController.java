@@ -41,6 +41,7 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         if (!userService.delete(id))
