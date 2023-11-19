@@ -12,3 +12,7 @@ logging:
       springframework:
         cloud:
           gateway: info
+
+jwt:
+  secret: secretdsadsadsadsadsadsadsadsadasdsadasdsadasdsadddddddddddddddddddddd
+  lifetime: 360000000
