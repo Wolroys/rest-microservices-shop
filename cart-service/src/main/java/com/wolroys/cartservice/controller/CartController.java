@@ -20,46 +20,46 @@ public class CartController {
 
     private final CartProductService cartProductService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<CartDto> getCartForUserId(@PathVariable Long userId){
-        CartDto cart = cartService.getCartByUserId(userId);
+    @GetMapping
+    public ResponseEntity<CartDto> getCartForUserId(@RequestHeader String userId){
+        CartDto cart = cartService.getCartByUserId(Long.parseLong(userId));
         return ResponseEntity.ok(cart);
     }
 
-    @PostMapping("/{userId}/items")
+    @PostMapping("/items")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<CartProductDto> addProductCart(@PathVariable Long userId, @RequestBody Long productId){
+    public ResponseEntity<CartProductDto> addProductCart(@RequestHeader(required = false) String userId, @RequestBody Long productId){
         try {
-            return ResponseEntity.ok(cartService.addProduct(userId, productId));
+            return ResponseEntity.ok(cartService.addProduct(Long.parseLong(userId), productId));
         } catch (ResponseStatusException e) {
             return new ResponseEntity("This product is out of stock", HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/{userId}/items/increase")
-    public ResponseEntity<CartProductDto> increaseQuantity(@PathVariable Long userId, @RequestBody Long productId){
-        return ResponseEntity.ok(cartService.increaseQuantity(userId, productId));
+    @PutMapping("/items/increase")
+    public ResponseEntity<CartProductDto> increaseQuantity(@RequestHeader(required = false) String userId, @RequestBody Long productId){
+        return ResponseEntity.ok(cartService.increaseQuantity(Long.parseLong(userId), productId));
     }
 
-    @PutMapping("/{userId}/items/decrease")
+    @PutMapping("/items/decrease")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CartProductDto decreaseQuantity(@PathVariable Long userId, @RequestBody Long productId){
-        return cartService.decreaseQuantity(userId, productId);
+    public CartProductDto decreaseQuantity(@RequestHeader(required = false) String userId, @RequestBody Long productId){
+        return cartService.decreaseQuantity(Long.parseLong(userId), productId);
     }
 
-    @DeleteMapping("/{userId}")
-    public void removeProduct(@PathVariable Long userId, @RequestBody Long productId){
-        cartService.removeProduct(userId, productId);
+    @DeleteMapping
+    public void removeProduct(@RequestHeader(required = false) String userId, @RequestBody Long productId){
+        cartService.removeProduct(Long.parseLong(userId), productId);
     }
 
-    @DeleteMapping("/clear/{userId}")
-    public void clear(@PathVariable Long userId){
-        cartService.clear(userId);
+    @DeleteMapping("/clear")
+    public void clear(@RequestHeader(required = false) String userId){
+        cartService.clear(Long.parseLong(userId));
     }
 
-    @GetMapping("/buy/{id}")
+    @GetMapping("/buy")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDto buy(@PathVariable Long id){
-        return cartService.createOrder(id);
+    public OrderDto buy(@RequestHeader String userId){
+        return cartService.createOrder(Long.parseLong(userId));
     }
 }

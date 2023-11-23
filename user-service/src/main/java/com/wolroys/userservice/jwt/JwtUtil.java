@@ -40,7 +40,7 @@ public class JwtUtil {
         }
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails, String userId){
         Map<String, Object> claims = new HashMap<>();
         List<String> roles = userDetails.getAuthorities()
                 .stream()
@@ -51,7 +51,7 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .claims(claims)
-                .subject(userDetails.getUsername())
+                .subject(userId)
                 .issuedAt(new Date())
                 .expiration(expiration)
                 .signWith(getSignKey()).compact();

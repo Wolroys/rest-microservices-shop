@@ -33,6 +33,7 @@ public class CartService {
     private final CartMapper cartMapper;
     private final CartProducerManager cartProducerManager;
 
+    @Transactional
     public Cart createCart(Long userId){
         Cart cart = new Cart();
         cart.setUserId(userId);
@@ -40,6 +41,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
+    @Transactional
     public CartDto getCartByUserId(Long userId){
         Cart cart = cartRepository.findByUserId(userId);
         if (cart == null)
@@ -69,8 +71,6 @@ public class CartService {
         } else
             return increaseQuantity(userId, productId);
 
-        if (cart.getTotalPrice() == null)
-            cart.setTotalPrice(0.0);
 
         return cartMapper.toCartProductDto(cartProduct);
     }

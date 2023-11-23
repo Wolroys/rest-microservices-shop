@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
                 .map(userRepository::saveAndFlush)
                 .orElseThrow();
 
-        return jwtUtil.generateToken(loadUserByUsername(user.getUsername()));
+        return jwtUtil.generateToken(loadUserByUsername(user.getUsername()), String.valueOf(user.getId()));
     }
 
     public String login(AuthDto authDto){
@@ -93,7 +93,8 @@ public class UserService implements UserDetailsService {
                         authDto.getPassword()));
         if (authentication.isAuthenticated()){
             UserDetails userDetails = loadUserByUsername(authDto.getUsername());
-            return jwtUtil.generateToken(userDetails);
+            User user = userRepository.findByUsername(authDto.getUsername()).get();
+            return jwtUtil.generateToken(userDetails, String.valueOf(user.getId()));
         } else
             throw new RuntimeException("invalid access");
     }
