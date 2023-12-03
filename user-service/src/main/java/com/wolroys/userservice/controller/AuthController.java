@@ -3,6 +3,7 @@ package com.wolroys.userservice.controller;
 import com.wolroys.shopentity.dto.AuthDto;
 import com.wolroys.shopentity.dto.UserCreateEditDto;
 import com.wolroys.userservice.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserCreateEditDto user){
+    public ResponseEntity<?> register(@RequestBody @Valid UserCreateEditDto user){
         if (userService.isExist(user.getUsername()))
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body("This user already exists");
