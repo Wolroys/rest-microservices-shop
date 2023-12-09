@@ -5,6 +5,7 @@ import com.wolroys.shopentity.dto.UserCreateEditDto;
 import com.wolroys.userservice.service.EmailServiceImpl;
 import com.wolroys.userservice.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,13 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody AuthDto authDto){
         if (!userService.isExist(authDto.getUsername())
                 && userService.findByUsername(authDto.getUsername()).get().getActivationCode() != null)
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Account doesn't exist");
+
+        if (!userService.isActive(authDto.getUsername()))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("You need to activate your account. Check your inbox");
 
        return ResponseEntity.ok("token: " + userService.login(authDto));
     }
