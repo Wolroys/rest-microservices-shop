@@ -2,6 +2,8 @@ package com.wolroys.shopgateway.jwt;
 
 import com.wolroys.shopgateway.validatior.RouteValidator;
 import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -21,6 +23,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Autowired
     private RouteValidator routeValidator;
 
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);
+
     public AuthenticationFilter(){
         super(Config.class);
     }
@@ -30,8 +34,10 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     public GatewayFilter apply(AuthenticationFilter.Config config) {
         return (((exchange, chain) -> {
             if (routeValidator.isSecured.test(exchange.getRequest())) {
-                if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION))
+                if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+                    LOG.error("something went wrong in gateway filter");
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized access to app");
+                }
 
                 try {
                     String token = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
@@ -44,6 +50,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         populateRequestWithHeaders(exchange, token);
                     }
                 } catch (Exception e) {
+                    LOG.error("something went wrong in gateway filter");
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized access to app");
                 }
             }
@@ -58,7 +65,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     private void populateRequestWithHeaders(ServerWebExchange exchange, String token){
         Claims claims = jwtUtil.getClaims(token);
         exchange.getRequest().mutate()
-                .header("userId", claims.getSubject())
+                .header("username", claims.getSubject())
                 .build();
     }
 }

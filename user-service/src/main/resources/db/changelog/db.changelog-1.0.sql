@@ -11,7 +11,8 @@ create table if not exists users
         unique,
     created_at  timestamp default CURRENT_TIMESTAMP,
     modified_at timestamp default CURRENT_TIMESTAMP,
-    role        varchar(32)
+    role        varchar(32),
+    activation_code varchar(64)
 );
 
 

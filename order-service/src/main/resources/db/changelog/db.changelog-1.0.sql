@@ -5,7 +5,7 @@ create table if not exists orders
 (
     id               bigserial
         primary key,
-    user_id          bigint,
+    username         varchar(256),
     order_date       timestamp,
     total_amount     numeric(10, 2),
     status           varchar(20),

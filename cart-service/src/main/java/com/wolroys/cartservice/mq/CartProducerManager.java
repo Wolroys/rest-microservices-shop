@@ -10,7 +10,7 @@ import reactor.core.publisher.Sinks;
 @Getter
 public class CartProducerManager {
 
-    private CartMessage cartMessage;
+    private final CartMessage cartMessage;
 
     public CartProducerManager(CartMessage cartMessage) {
         this.cartMessage = cartMessage;

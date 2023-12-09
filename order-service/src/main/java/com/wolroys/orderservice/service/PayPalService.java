@@ -48,7 +48,7 @@ public class PayPalService {
                                 .quantity(String.valueOf(product.getQuantity())))
                         .toList())
                 .shippingDetail(new ShippingDetail()
-                        .name(new Name().fullName(String.valueOf("sb-oirkd28492435@business.example.com"))) //TODO switch id to username
+                        .name(new Name().fullName(String.valueOf("sb-oirkd28492435@business.example.com")))
                         .addressPortable(new AddressPortable()
                                 .addressLine1("Baker Street 221B")
                                 .addressLine2("floor 4")

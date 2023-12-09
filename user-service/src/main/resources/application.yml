@@ -7,7 +7,3 @@ spring:
     import: configserver:http://localhost:8888
 server:
   port: 0
-
-jwt:
-  secret: secretdsadsadsadsadsadsadsadsadasdsadasdsadasdsadddddddddddddddddddddd
-  lifetime: 360000000

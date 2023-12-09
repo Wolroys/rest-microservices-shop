@@ -4,7 +4,7 @@
 create table if not exists cart
 (
     id bigserial primary key,
-    user_id     integer not null,
+    username  varchar(128) not null,
     total_price numeric(10, 2),
     created_at  timestamp,
     modified_at timestamp

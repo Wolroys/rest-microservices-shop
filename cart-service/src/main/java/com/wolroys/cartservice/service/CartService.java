@@ -34,27 +34,27 @@ public class CartService {
     private final CartProducerManager cartProducerManager;
 
     @Transactional
-    public Cart createCart(Long userId){
+    public Cart createCart(String username){
         Cart cart = new Cart();
-        cart.setUserId(userId);
+        cart.setUsername(username);
         cart.setTotalPrice(0.0);
         return cartRepository.save(cart);
     }
 
     @Transactional
-    public CartDto getCartByUserId(Long userId){
-        Cart cart = cartRepository.findByUserId(userId);
+    public CartDto getCartByUsername(String username){
+        Cart cart = cartRepository.findByUsername(username);
         if (cart == null)
-            cart = createCart(userId);
+            cart = createCart(username);
         return cartMapper.toCartDto(cart);
     }
 
     @Transactional
-    public CartProductDto addProduct(Long userId, Long productId){
-        Cart cart = cartRepository.findByUserId(userId);
+    public CartProductDto addProduct(String username, Long productId){
+        Cart cart = cartRepository.findByUsername(username);
 
         if (cart == null)
-            cart = createCart(userId);
+            cart = createCart(username);
 
         CartProduct cartProduct = null;
 
@@ -69,18 +69,18 @@ public class CartService {
 
             cartRepository.save(cart);
         } else
-            return increaseQuantity(userId, productId);
+            return increaseQuantity(username, productId);
 
 
         return cartMapper.toCartProductDto(cartProduct);
     }
 
     @Transactional
-    public CartProductDto increaseQuantity(Long userId, Long productId){
+    public CartProductDto increaseQuantity(String username, Long productId){
         CartProduct cartProduct = cartProductRepository.findByProductId(productId);
         cartProduct.setQuantity(cartProduct.getQuantity() + 1);
 
-        Cart cart = cartRepository.findByUserId(userId);
+        Cart cart = cartRepository.findByUsername(username);
         cart.setTotalPrice(cart.getTotalPrice() + cartProduct.getPrice());
 
         cartRepository.save(cart);
@@ -89,12 +89,12 @@ public class CartService {
     }
 
     @Transactional
-    public CartProductDto decreaseQuantity(Long userId, Long productId){
+    public CartProductDto decreaseQuantity(String username, Long productId){
 
         CartProduct cartProduct = cartProductRepository.findByProductId(productId);
         cartProduct.setQuantity(cartProduct.getQuantity() - 1);
 
-        Cart cart = cartRepository.findByUserId(userId);
+        Cart cart = cartRepository.findByUsername(username);
         cart.setTotalPrice(cart.getTotalPrice() - cartProduct.getPrice());
 
         cartRepository.save(cart);
@@ -103,9 +103,9 @@ public class CartService {
     }
 
     @Transactional
-    public void removeProduct(Long userId, Long productId){
+    public void removeProduct(String username, Long productId){
         CartProduct cartProduct = cartProductRepository.findByProductId(productId);
-        Cart cart = cartRepository.findByUserId(userId);
+        Cart cart = cartRepository.findByUsername(username);
 
         cart.setTotalPrice(cart.getTotalPrice() - cartProduct.getPrice() * cartProduct.getQuantity());
 
@@ -115,21 +115,21 @@ public class CartService {
     }
 
     @Transactional
-    public void clear(Long userId){
-        Cart cart = cartRepository.findByUserId(userId);
+    public void clear(String username){
+        Cart cart = cartRepository.findByUsername(username);
         cartProductRepository.removeAllByCartId(cart.getId());
         cartRepository.delete(cart);
-        createCart(userId);
+        createCart(username);
     }
 
     @Transactional
-    public OrderDto createOrder(Long userId){
-        CartDto cart = getCartByUserId(userId);
+    public OrderDto createOrder(String username){
+        CartDto cart = getCartByUsername(username);
 
         if (cart != null && !cart.getProducts().isEmpty()){
             OrderDto orderDto = new OrderDto();
 
-            orderDto.setUserId(userId);
+            orderDto.setUsername(username);
             orderDto.setOrderDate(LocalDate.now());
             orderDto.setStatus(Status.PAID);
             orderDto.setProducts(cart.getProducts()
@@ -138,7 +138,7 @@ public class CartService {
                     .toList());
             orderDto.setTotalAmount(cart.getTotalPrice());
 
-            clear(userId);
+            clear(username);
 
             cartProducerManager.sendNewCartMessage(orderDto);
 

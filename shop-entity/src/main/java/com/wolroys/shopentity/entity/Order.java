@@ -21,7 +21,7 @@ public class Order extends AuditingEntity<Long>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    private String username;
 
     private LocalDate orderDate;
 

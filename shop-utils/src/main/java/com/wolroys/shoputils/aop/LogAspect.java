@@ -29,7 +29,7 @@ public class LogAspect {
 
     @AfterThrowing(value = "isControllerLayer() && target(controller)", throwing = "e")
     public void addLoggingForExceptions(Throwable e, Object controller){
-        log.warn("An error {}: {} was received in the controller: {}", e.getClass().getSimpleName(), e.getMessage(),
+        log.error("An error {}: {} was received in the controller: {}", e.getClass().getSimpleName(), e.getMessage(),
                 controller.getClass().getSimpleName());
     }
 }

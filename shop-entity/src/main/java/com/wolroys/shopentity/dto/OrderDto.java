@@ -1,6 +1,5 @@
 package com.wolroys.shopentity.dto;
 
-import com.wolroys.shopentity.dto.OrderProductDto;
 import com.wolroys.shopentity.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +17,7 @@ public class OrderDto {
 
     private Long id;
 
-    private Long userId;
+    private String username;
 
     private LocalDate orderDate;
 

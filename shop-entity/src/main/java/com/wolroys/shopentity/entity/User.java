@@ -26,4 +26,6 @@ public class User extends AuditingEntity<Long>{
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private String activationCode;
 }

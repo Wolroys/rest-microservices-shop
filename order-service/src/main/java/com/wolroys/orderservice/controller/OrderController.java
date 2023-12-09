@@ -29,10 +29,10 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "We can't find anything"));
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderDto> getUserOrders(@PathVariable Long userId){ //TODO auth
-        return orderService.getAllForUser(userId);
+    public List<OrderDto> getUserOrders(@RequestHeader String username){
+        return orderService.getAllByUsername(username);
     }
 
     @GetMapping("/complete/{id}")

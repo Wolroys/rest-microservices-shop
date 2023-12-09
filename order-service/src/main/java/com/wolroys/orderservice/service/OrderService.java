@@ -21,27 +21,27 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
-    public List<OrderDto> findAll(){
+    public List<OrderDto> findAll() {
         return orderRepository
                 .findAll()
                 .stream().map(orderMapper::toOrderDto)
                 .toList();
     }
 
-    public Optional<OrderDto> findById(Long id){
+    public Optional<OrderDto> findById(Long id) {
         return orderRepository.findById(id)
                 .map(orderMapper::toOrderDto);
     }
 
-    public List<OrderDto> getAllForUser(Long userId){
-        return orderRepository.findAllByUserId(userId)
+    public List<OrderDto> getAllByUsername(String username) {
+        return orderRepository.findAllByUsername(username)
                 .stream().
                 map(orderMapper::toOrderDto)
                 .toList();
     }
 
     @Transactional
-    public void completeOrder(Long id){
+    public void completeOrder(Long id) {
         OrderDto dto = findById(id)
                 .orElseThrow(NoSuchElementException::new);
 
@@ -52,14 +52,14 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(OrderDto orderDto){
+    public void createOrder(OrderDto orderDto) {
         Order order = orderMapper.toOrder(orderDto);
 
         orderRepository.save(order);
     }
 
     @Transactional
-    public boolean cancelOrder(Long id){
+    public boolean cancelOrder(Long id) {
         return orderRepository.findById(id)
                 .map(entity -> {
                     entity.setStatus(Status.CANCELLED);
@@ -67,8 +67,4 @@ public class OrderService {
                     return true;
                 }).orElse(false);
     }
-
-
-    //TODO create notification method about creating order
-    //TODO add paypal
 }

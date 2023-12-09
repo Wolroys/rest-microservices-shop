@@ -24,7 +24,7 @@ import java.util.Map;
 public class JwtUtil {
 
     @Value("${jwt.secret}")
-    public String secret; //TODO move to git configuration
+    public String secret;
 
     @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
@@ -40,7 +40,7 @@ public class JwtUtil {
         }
     }
 
-    public String generateToken(UserDetails userDetails, String userId){
+    public String generateToken(UserDetails userDetails, String username){
         Map<String, Object> claims = new HashMap<>();
         List<String> roles = userDetails.getAuthorities()
                 .stream()
@@ -51,7 +51,7 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .claims(claims)
-                .subject(userId)
+                .subject(username)
                 .issuedAt(new Date())
                 .expiration(expiration)
                 .signWith(getSignKey()).compact();

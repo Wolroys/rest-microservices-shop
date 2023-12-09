@@ -21,18 +21,19 @@ public class CartController {
     private final CartProductService cartProductService;
 
     @GetMapping
-    public ResponseEntity<CartDto> getCartForUserId(@RequestHeader String userId){
-        CartDto cart = cartService.getCartByUserId(Long.parseLong(userId));
+    public ResponseEntity<CartDto> getCartForUserId(@RequestHeader String username){
+        CartDto cart = cartService.getCartByUsername(username);
         return ResponseEntity.ok(cart);
     }
 
     @PostMapping("/items")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<CartProductDto> addProductCart(@RequestHeader(required = false) String userId, @RequestBody Long productId){
+    public ResponseEntity<?> addProductCart(@RequestHeader(required = true) String username,
+                                                         @RequestBody Long productId){
         try {
-            return ResponseEntity.ok(cartService.addProduct(Long.parseLong(userId), productId));
+            return ResponseEntity.ok(cartService.addProduct(username, productId));
         } catch (ResponseStatusException e) {
-            return new ResponseEntity("This product is out of stock", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("This product is out of stock", HttpStatus.NOT_FOUND);
         }
     }
 

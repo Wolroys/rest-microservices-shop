@@ -15,10 +15,10 @@ import java.util.function.Supplier;
 @Getter
 public class CartMessage {
 
-    private Sinks.Many<Message<OrderDto>> innerBus = Sinks.many().multicast().onBackpressureBuffer(Queues.SMALL_BUFFER_SIZE, false);
+    private final Sinks.Many<Message<OrderDto>> innerBus = Sinks.many().multicast().onBackpressureBuffer(Queues.SMALL_BUFFER_SIZE, false);
 
     @Bean
     public Supplier<Flux<Message<OrderDto>>> newOrderProduce(){
-        return () -> innerBus.asFlux();
+        return innerBus::asFlux;
     }
 }

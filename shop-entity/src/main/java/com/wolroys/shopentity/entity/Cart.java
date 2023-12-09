@@ -18,7 +18,7 @@ public class Cart extends AuditingEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    private String username;
 
     private Double totalPrice;
 

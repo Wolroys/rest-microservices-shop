@@ -8,7 +8,6 @@ import com.wolroys.shopentity.entity.User;
 import com.wolroys.shopentity.mapper.UserMapper;
 import com.wolroys.userservice.jwt.JwtUtil;
 import com.wolroys.userservice.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,10 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -36,15 +32,18 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
+    private final EmailServiceImpl emailService;
 
     public UserService(UserRepository userRepository, UserMapper userMapper,
                        PasswordEncoder passwordEncoder, JwtUtil jwtUtil,
-                       @Lazy AuthenticationManager authenticationManager) {
+                       @Lazy AuthenticationManager authenticationManager,
+                       EmailServiceImpl emailService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
+        this.emailService = emailService;
     }
 
     public List<UserDto> findAll(){
@@ -79,12 +78,21 @@ public class UserService implements UserDetailsService {
                 .map(entity -> {
                     entity.setPassword(passwordEncoder.encode(entity.getPassword()));
                     entity.setRole(Role.USER);
+                    entity.setActivationCode(UUID.randomUUID().toString());
+                    String message = String.format(
+                            "Hello, %s! \n" +
+                                    "Welcome to spring-shop. Please, visit next link: http://localhost:8765/auth/activate/%s",
+                            entity.getUsername(),
+                            entity.getActivationCode()
+                    );
+                    emailService.sendSimpleEmail(entity.getEmail(), "Account activation", message);
                     return entity;
                 })
                 .map(userRepository::saveAndFlush)
                 .orElseThrow();
 
-        return jwtUtil.generateToken(loadUserByUsername(user.getUsername()), String.valueOf(user.getId()));
+
+        return jwtUtil.generateToken(loadUserByUsername(user.getUsername()), user.getUsername());
     }
 
     public String login(AuthDto authDto){
@@ -94,7 +102,7 @@ public class UserService implements UserDetailsService {
         if (authentication.isAuthenticated()){
             UserDetails userDetails = loadUserByUsername(authDto.getUsername());
             User user = userRepository.findByUsername(authDto.getUsername()).get();
-            return jwtUtil.generateToken(userDetails, String.valueOf(user.getId()));
+            return jwtUtil.generateToken(userDetails, user.getUsername());
         } else
             throw new RuntimeException("invalid access");
     }
@@ -136,6 +144,23 @@ public class UserService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Role role){
         return Collections.singleton(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Transactional
+    public boolean activateUser(String code){
+        Optional<User> user = userRepository.findByActivationCode(code);
+
+        if (user.isEmpty())
+            return false;
+
+        user.get().setActivationCode(null);
+        userRepository.saveAndFlush(user.get());
+
+        return true;
+    }
+
+    public boolean isTaken(String email){
+        return userRepository.existsByEmail(email);
     }
 }
 
