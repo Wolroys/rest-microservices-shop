@@ -165,7 +165,7 @@ public class UserService implements UserDetailsService {
 
     public boolean isActive(String username){
         Optional<User> user = userRepository.findByUsername(username);
-        return user.isPresent() && user.get().getActivationCode() != null;
+        return user.isPresent() && user.get().getActivationCode() == null;
     }
 }
 

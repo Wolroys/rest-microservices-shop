@@ -38,9 +38,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthDto authDto){
-        if (!userService.isExist(authDto.getUsername())
-                && userService.findByUsername(authDto.getUsername()).get().getActivationCode() != null)
-
+        if (!userService.isExist(authDto.getUsername()))
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Account doesn't exist");
 

@@ -1,5 +1,6 @@
 package com.wolroys.userservice;
 
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
