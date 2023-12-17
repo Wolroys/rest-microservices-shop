@@ -38,29 +38,29 @@ public class CartController {
     }
 
     @PutMapping("/items/increase")
-    public ResponseEntity<CartProductDto> increaseQuantity(@RequestHeader(required = false) String userId, @RequestBody Long productId){
-        return ResponseEntity.ok(cartService.increaseQuantity(Long.parseLong(userId), productId));
+    public ResponseEntity<CartProductDto> increaseQuantity(@RequestHeader(required = false) String username, @RequestBody Long productId){
+        return ResponseEntity.ok(cartService.increaseQuantity(username, productId));
     }
 
     @PutMapping("/items/decrease")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CartProductDto decreaseQuantity(@RequestHeader(required = false) String userId, @RequestBody Long productId){
-        return cartService.decreaseQuantity(Long.parseLong(userId), productId);
+    public CartProductDto decreaseQuantity(@RequestHeader(required = false) String username, @RequestBody Long productId){
+        return cartService.decreaseQuantity(username, productId);
     }
 
     @DeleteMapping
-    public void removeProduct(@RequestHeader(required = false) String userId, @RequestBody Long productId){
-        cartService.removeProduct(Long.parseLong(userId), productId);
+    public void removeProduct(@RequestHeader(required = true) String username, @RequestBody Long productId){
+        cartService.removeProduct(username, productId);
     }
 
     @DeleteMapping("/clear")
-    public void clear(@RequestHeader(required = false) String userId){
-        cartService.clear(Long.parseLong(userId));
+    public void clear(@RequestHeader(required = true) String username){
+        cartService.clear(username);
     }
 
     @GetMapping("/buy")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDto buy(@RequestHeader String userId){
-        return cartService.createOrder(Long.parseLong(userId));
+    public OrderDto buy(@RequestHeader String username){
+        return cartService.createOrder(username);
     }
 }

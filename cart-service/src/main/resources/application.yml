@@ -10,4 +10,9 @@ spring:
 server:
   port: 0
 
+springdoc:
+  swagger-ui:
+    config-url: /cart-service/v3/api-docs/swagger-config
+    url: /cart-service/v3/api-docs
+
 
