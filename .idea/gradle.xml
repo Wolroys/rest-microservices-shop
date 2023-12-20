@@ -12,6 +12,11 @@
                   <project path="$PROJECT_DIR$/cart-service" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/front-service" name="front-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/front-service" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/item-service" name="item-service">
                 <projects>
                   <project path="$PROJECT_DIR$/item-service" />
@@ -61,6 +66,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/cart-service" />
+            <option value="$PROJECT_DIR$/front-service" />
             <option value="$PROJECT_DIR$/item-service" />
             <option value="$PROJECT_DIR$/order-service" />
             <option value="$PROJECT_DIR$/shop-config" />

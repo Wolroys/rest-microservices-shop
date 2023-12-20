@@ -5,17 +5,17 @@ import com.wolroys.shopentity.dto.UserCreateEditDto;
 import com.wolroys.userservice.service.EmailServiceImpl;
 import com.wolroys.userservice.service.UserService;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*", allowedHeaders = {"Content-Type", "Authorization"},
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}) //TODO сделать что-то с cors
 public class AuthController {
 
     private final UserService userService;
@@ -46,7 +46,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("You need to activate your account. Check your inbox");
 
-       return ResponseEntity.ok("token: " + userService.login(authDto));
+       return ResponseEntity.ok().body(userService.login(authDto));
     }
 
     @GetMapping("/activate/{code}")
@@ -71,5 +71,14 @@ public class AuthController {
         return new ResponseEntity<>("Please check your inbox", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.OPTIONS)
+    public ResponseEntity<?> handleOptions() {
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.OPTIONS)
+    public ResponseEntity<?> handleOptionsLogin() {
+        return ResponseEntity.ok().build();
+    }
 
 }

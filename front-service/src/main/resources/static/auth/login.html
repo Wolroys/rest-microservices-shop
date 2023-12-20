@@ -1,0 +1,19 @@
+<div ng-controller="loginController">
+
+    <h2>Login</h2>
+
+    <form ng-submit="tryToAuth()">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" ng-model="user.username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" ng-model="user.password" required>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <p>Don't have an account? <a href="#/register">Register</a></p>
+
+</div>

@@ -9,4 +9,5 @@ includeBuild 'user-service'
 includeBuild 'cart-service'
 includeBuild 'order-service'
 includeBuild 'shop-utils'
+includeBuild 'front-service'
 

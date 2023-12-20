@@ -58,6 +58,11 @@ public class CartController {
         cartService.clear(username);
     }
 
+    @GetMapping("/generate")
+    public void generateCart(@RequestHeader(required = true) String username){
+        cartService.createCart(username);
+    }
+
     @GetMapping("/buy")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto buy(@RequestHeader String username){
